@@ -46,7 +46,7 @@ public class AuthorizationTest {
         List<WebDriver> drivers = Utils.getDrivers();
         drivers.parallelStream().forEach(driver -> {
             ForumPage forumPage = new ForumPage(driver);
-            driver.get("https://forum.trustedreviews.com/");
+            driver.get(Utils.FORUM_URL);
             forumPage.doLogin(Utils.LOGIN);
             forumPage.doLogout();
             WebElement logout = Utils.getElement(driver, By.xpath("/html/body/div[3]/div[2]/header/div[2]/div[3]/ul/li[3]/button/span"));

@@ -67,7 +67,7 @@ public class ForumPage extends Page {
     }
 
     public WebElement followOnDiscussion(){
-        doLogin(Utils.LOGIN);
+        // doLogin(Utils.LOGIN);
         WebElement followBtn = Utils.getElement(driver, By.xpath("/html/body/div[3]/main/div[1]/div/div/div/div/nav/ul/li[2]/div/button[1]"));
         followBtn.click();
         WebElement text = Utils.getElement(driver, By.xpath("//*[@id=\"content\"]/div/div/div/div/nav/ul/li[2]/div/button[1]/span"));

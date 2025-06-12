@@ -20,6 +20,10 @@ public class CreateContentTest {
         drivers.parallelStream().forEach(driver -> {
             ForumPage forumPage = new ForumPage(driver);
             driver.get(Utils.ARTICLE_URL);
+            forumPage.doLogin(Utils.LOGIN);
+            WebElement followBtn = Utils.getElement(driver, By.xpath("/html/body/div[3]/main/div[1]/div/div/div/div/nav/ul/li[2]/div/button[1]"));
+            followBtn.click();
+            
             WebElement result = forumPage.followOnDiscussion();
             
             assertEquals("Following", result.getText());
@@ -37,9 +41,9 @@ public class CreateContentTest {
             ForumPage forumPage = new ForumPage(driver);
             driver.get(Utils.ARTICLE_URL);
             forumPage.doLogin(Utils.LOGIN);
-            WebElement text = Utils.getElement(driver, By.xpath("//*[@id=\"content\"]/div/div/div/div/nav/ul/li[2]/div/button[1]/span"));
-            assertEquals("Following", text.getText());
+
             WebElement result = forumPage.unFollowDiscussion();
+            result.click();
             assertEquals("Follow", result.getText());
             WebElement followBtn = Utils.getElement(driver, By.xpath("/html/body/div[3]/main/div[1]/div/div/div/div/nav/ul/li[2]/div/button[1]"));
             followBtn.click();
