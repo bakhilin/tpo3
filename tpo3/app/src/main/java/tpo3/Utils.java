@@ -35,7 +35,7 @@ public class Utils {
     public static List<WebDriver> getDrivers(){
         List<WebDriver> drivers = new ArrayList<>();
         try {
-            List<String> properties = Files.readAllLines(Paths.get("/home/bakhilin/tpo3/trustedreviews.properties"));
+            List<String> properties = Files.readAllLines(Paths.get("/home/bakhilin/Desktop/tpo3/tpo3/trustedreviews.properties"));
             for (String property : properties) {
                 if (property.startsWith("WEB_DRIVER")) {
                     switch (property.toLowerCase().split("=")[1]) {
@@ -60,9 +60,8 @@ public class Utils {
     }
 
     public static ChromeDriver getChromeDriver() {
-    
+        
         return new ChromeDriver();
-            
     }
 
     public static FirefoxDriver getFirefoxDriver() {

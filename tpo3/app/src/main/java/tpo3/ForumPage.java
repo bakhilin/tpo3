@@ -4,7 +4,6 @@ package tpo3;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -21,8 +20,9 @@ public class ForumPage extends Page {
 
 
     private void tryLogin(String password) {
-        WebElement agree = Utils.getElement(driver, By.xpath("//*[@id=\"accept-btn\"]"));
-        agree.click();
+        agreeCookies();
+        // WebElement agree = Utils.getElement(driver, By.xpath("//*[@id=\"accept-btn\"]"));
+        // agree.click();
         WebElement loginButton = Utils.getElement(driver, By.xpath("//*[@id=\"header-secondary\"]/ul/li[3]/button"));
         loginButton.click();
         WebElement loginInput = Utils.getElement(driver, By.xpath("/html/body/div[4]/div[1]/div[1]/div/form/div[2]/div[2]/div[1]/input"));
@@ -46,5 +46,10 @@ public class ForumPage extends Page {
 
     public void doWrongLogin(){
         tryLogin(Utils.WRONG_PASSWORD);
+    }
+
+    public void agreeCookies(){
+        WebElement agree = Utils.getElement(driver, By.xpath("//*[@id=\"accept-btn\"]"));
+        agree.click();
     }
 }
