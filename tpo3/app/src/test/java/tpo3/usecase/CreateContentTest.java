@@ -19,32 +19,28 @@ public class CreateContentTest {
         List<WebDriver> drivers = Utils.getDrivers();
         drivers.parallelStream().forEach(driver -> {
             ForumPage forumPage = new ForumPage(driver);
-            driver.get("https://forum.trustedreviews.com/d/37-what-tvs-would-you-like-trusted-reviews-to-look-at");
-            forumPage.doLogin();
-            WebElement followBtn = Utils.getElement(driver, By.xpath("/html/body/div[3]/main/div[1]/div/div/div/div/nav/ul/li[2]/div/button[1]"));
-            followBtn.click();
-            WebElement text = Utils.getElement(driver, By.xpath("//*[@id=\"content\"]/div/div/div/div/nav/ul/li[2]/div/button[1]/span"));
-            assertEquals("Following", text.getText());
-            WebElement unfollowBtn = Utils.getElement(driver, By.xpath("/html/body/div[3]/main/div[1]/div/div/div/div/nav/ul/li[2]/div/button[1]"));
-            unfollowBtn.click();
+            driver.get(Utils.ARTICLE_URL);
+            WebElement result = forumPage.followOnDiscussion();
+            
+            assertEquals("Following", result.getText());
+            
+            forumPage.resetChangesBtn("/html/body/div[3]/main/div[1]/div/div/div/div/nav/ul/li[2]/div/button[1]");
         });
 
         drivers.forEach(WebDriver::quit);
     }
 
     @Test 
-    void unfollowDiscussion(){
+    void unFollowDiscussion(){
         List<WebDriver> drivers = Utils.getDrivers();
         drivers.parallelStream().forEach(driver -> {
             ForumPage forumPage = new ForumPage(driver);
-            driver.get("https://forum.trustedreviews.com/d/37-what-tvs-would-you-like-trusted-reviews-to-look-at");
-            forumPage.doLogin();
+            driver.get(Utils.ARTICLE_URL);
+            forumPage.doLogin(Utils.LOGIN);
             WebElement text = Utils.getElement(driver, By.xpath("//*[@id=\"content\"]/div/div/div/div/nav/ul/li[2]/div/button[1]/span"));
             assertEquals("Following", text.getText());
-            WebElement unfollowBtn = Utils.getElement(driver, By.xpath("/html/body/div[3]/main/div[1]/div/div/div/div/nav/ul/li[2]/div/button[1]"));
-            unfollowBtn.click();
-            WebElement textUnfollow = Utils.getElement(driver, By.xpath("/html/body/div[3]/main/div[1]/div/div/div/div/nav/ul/li[2]/div/button[1]/span"));
-            assertEquals("Follow", textUnfollow.getText());
+            WebElement result = forumPage.unFollowDiscussion();
+            assertEquals("Follow", result.getText());
             WebElement followBtn = Utils.getElement(driver, By.xpath("/html/body/div[3]/main/div[1]/div/div/div/div/nav/ul/li[2]/div/button[1]"));
             followBtn.click();
         });
@@ -57,14 +53,11 @@ public class CreateContentTest {
         List<WebDriver> drivers = Utils.getDrivers();
         drivers.parallelStream().forEach(driver -> {
             ForumPage forumPage = new ForumPage(driver);
-            driver.get("https://forum.trustedreviews.com/d/37-what-tvs-would-you-like-trusted-reviews-to-look-at");
-            forumPage.doLogin();
-            WebElement likeBtn = Utils.getElement(driver, By.xpath("/html/body/div[3]/main/div[1]/div/div/div/div/div/div/div[2]/article/div/aside/ul/li[3]/button"));
-            likeBtn.click();
+            driver.get(Utils.ARTICLE_URL);
+            forumPage.likeComment();
             WebElement checkLike = Utils.getElement(driver, By.xpath("/html/body/div[3]/main/div[1]/div/div/div/div/div/div/div[2]/article/div/aside/ul/li[3]/button/span"));
             assertEquals("Unlike", checkLike.getText());
-            WebElement unlike = Utils.getElement(driver, By.xpath("/html/body/div[3]/main/div[1]/div/div/div/div/div/div/div[2]/article/div/aside/ul/li[3]/button/span"));
-            unlike.click();
+            forumPage.resetChangesBtn("/html/body/div[3]/main/div[1]/div/div/div/div/div/div/div[2]/article/div/aside/ul/li[3]/button/span");
         });
 
         drivers.forEach(WebDriver::quit);
@@ -75,17 +68,8 @@ public class CreateContentTest {
         List<WebDriver> drivers = Utils.getDrivers();
         drivers.parallelStream().forEach(driver -> {
             ForumPage forumPage = new ForumPage(driver);
-            driver.get("https://forum.trustedreviews.com/d/37-what-tvs-would-you-like-trusted-reviews-to-look-at");
-            forumPage.doLogin();
-            WebElement flagBtn = Utils.getElement(driver, By.xpath("/html/body/div[3]/main/div[1]/div/div/div/div/div/div/div[1]/article/div/aside/ul/li[4]/div/button"));
-            flagBtn.click();
-            
-            WebElement openFlag = Utils.getElement(driver, By.xpath("/html/body/div[3]/main/div[1]/div/div/div/div/div/div/div[1]/article/div/aside/ul/li[4]/div/ul/li/button"));
-            openFlag.click();
-            WebElement offTopicBtn = Utils.getElement(driver, By.xpath("/html/body/div[4]/div[1]/div[1]/div/form/div[2]/div/div[1]/div/label[1]/input"));
-            offTopicBtn.click();
-            WebElement flagPost = Utils.getElement(driver, By.xpath("/html/body/div[4]/div[1]/div[1]/div/form/div[2]/div/div[2]/button"));
-            flagPost.click();
+            driver.get(Utils.ARTICLE_URL);
+            forumPage.setFlag();
         });
         
         drivers.forEach(WebDriver::quit);
@@ -97,17 +81,9 @@ public class CreateContentTest {
         List<WebDriver> drivers = Utils.getDrivers();
         drivers.parallelStream().forEach(driver -> {
             ForumPage forumPage = new ForumPage(driver);
-            driver.get("https://forum.trustedreviews.com/d/37-what-tvs-would-you-like-trusted-reviews-to-look-at");
-            forumPage.doLogin();
-            driver.navigate().refresh();
-            WebElement replyBtn = Utils.getElement(driver, By.xpath("/html/body/div[3]/main/div[1]/div/div/div/div/div/div/div[1]/article/div/aside/ul/li[2]/button"));
-            replyBtn.click();
-            WebElement textArea = Utils.getElement(driver, By.xpath("/html/body/div[3]/main/div[4]/div/div/div/div[2]/div/div[1]/div/div/div/div/textarea"));
-            textArea.clear();
-            String testText = "Hello, Guys! Really interesting discussion.";
-            textArea.sendKeys(testText);    
-            WebElement sendTextBtn = Utils.getElement(driver, By.xpath("/html/body/div[3]/main/div[4]/div/div/div/div[2]/div/div[1]/div/div/ul/li[1]/button"));
-            sendTextBtn.click();
+            driver.get(Utils.ARTICLE_URL);
+            forumPage.reply();            
+            
             WebElement comment = Utils.getElement(driver, By.xpath("/html/body/div[3]/main/div[1]/div/div/div/div/div/div/div[27]/article/div/div/p"));
             
             assertEquals("Hello, Guys! Really interesting discussion.", comment.getText());
@@ -118,15 +94,20 @@ public class CreateContentTest {
 
     
     @Test 
-    void startDiscussion() {
+    void startDiscussionTest() {
         List<WebDriver> drivers = Utils.getDrivers();
         drivers.parallelStream().forEach(driver -> {
             ForumPage forumPage = new ForumPage(driver);
-            driver.get("https://forum.trustedreviews.com/");
-            forumPage.doLogin();
-            driver.navigate().refresh();    
-            WebElement startDiscussionBtn = Utils.getElement(driver, By.xpath("/html/body/div[3]/main/div[1]/div/div[2]/div[2]/nav/ul/li[2]/button"));
-            startDiscussionBtn.click();
+            driver.get("https://forum.trustedreviews.com/");            
+            
+            forumPage.startDiscussion();
+
+            WebElement checkPostedTitle = Utils.getElement(driver, By.xpath("/html/body/div[3]/main/div[1]/div/div[2]/div[2]/div[1]/div[2]/div[1]/div[1]/a/div/div[2]/div[1]/div[1]/h2"));
+            WebElement checkPostedBody = Utils.getElement(driver, By.xpath("/html/body/div[3]/main/div[1]/div/div[2]/div[2]/div[1]/div[2]/div[1]/div[1]/a/div/div[2]/div[2]"));
+
+            assertEquals(checkPostedTitle.getText(), "Test");
+            assertEquals(checkPostedBody.getText(), "Some post body Test");
+            // rename, restore, delete
         });
 
         drivers.forEach(WebDriver::quit);

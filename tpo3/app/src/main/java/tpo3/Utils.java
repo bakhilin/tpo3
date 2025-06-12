@@ -5,7 +5,9 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -19,18 +21,17 @@ import java.util.List;
 import java.util.Objects;
 
 public class Utils {
-    public static final String CHROME_NAME = "webdriver.chrome.driver";
-    public static final String CHROME_PATH = "/usr/bin/chromedriver";
-    public static final String FIREFOX_NAME = "webdriver.gecko.driver";
-    public static final String FIREFOX_PATH = "chromedriver-mac-arm64/geckodriver";
-
     public static final String URL = "https://www.trustedreviews.com";
     public static final String FORUM_URL = "https://forum.trustedreviews.com";
+    public static final String ARTICLE_URL = "https://forum.trustedreviews.com/d/37-what-tvs-would-you-like-trusted-reviews-to-look-at";
+    public static final String SETTINGS_URL = "https://forum.trustedreviews.com/settings";
 
     public static final String EMAIL = "mario.lawio@mail.ru";
     public static final String LOGIN = "ojito";
     public static final String PASSWORD = "sPii*9212";
     public static final String WRONG_PASSWORD = "312";
+    public static final String WRONG_LOGIN = "ohito";
+    public static final String WRONG_EMAIL = "mario@mail.ru";
 
     public static List<WebDriver> getDrivers(){
         List<WebDriver> drivers = new ArrayList<>();
@@ -41,16 +42,16 @@ public class Utils {
                     switch (property.toLowerCase().split("=")[1]) {
                         case "chrome":
                             drivers.add(getChromeDriver());
-                            break;  // Changed from return to break
+                            break;  
                         case "firefox":
                             drivers.add(getFirefoxDriver());
-                            break;  // Changed from return to break
+                            break; 
                         case "both":
                             drivers.add(getChromeDriver());
                             drivers.add(getFirefoxDriver());
-                            break;  // Changed from return to break
+                            break;  
                     }
-                    return drivers;  // Moved return here
+                    return drivers;  
                 }
             }
         } catch (Exception e) {
@@ -60,21 +61,23 @@ public class Utils {
     }
 
     public static ChromeDriver getChromeDriver() {
-        
-        return new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--window-size=1400,900");
+        options.addArguments("--disable-notifications");
+
+        return new ChromeDriver(options);
     }
 
     public static FirefoxDriver getFirefoxDriver() {
         WebDriverManager.firefoxdriver().setup();
-        
+        FirefoxOptions options = new FirefoxOptions();
+        options.addArguments("--window-size=1400,900");
+        options.addArguments("--disable-notifications");
+
         return new FirefoxDriver();
     }
 
-    public static void prepareDrivers() {
-        System.setProperty(CHROME_NAME, CHROME_PATH);
-        System.setProperty(FIREFOX_NAME, FIREFOX_PATH);
-    }
-
+    
     public static WebElement getElement(WebDriver driver, By locator) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(45));
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));

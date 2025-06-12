@@ -38,9 +38,9 @@ public class ForumMainPageTest {
     void checkTopFilterTest(){
         List<WebDriver> drivers = Utils.getDrivers();
         drivers.parallelStream().forEach(driver -> {
-            driver.get(Utils.FORUM_URL);
             ForumPage forumPage = new ForumPage(driver);
-            // forumPage.agreeCookies();
+            driver.get(Utils.FORUM_URL);
+            forumPage.agreeCookies();
             WebElement filterBtn = Utils.getElement(driver, By.xpath("/html/body/div[3]/main/div[1]/div/div[2]/div[2]/div[1]/div[1]/ul[1]/li/div/button"));
             filterBtn.click();
             WebElement topBtn = Utils.getElement(driver, By.xpath("/html/body/div[3]/main/div[1]/div/div[2]/div[2]/div[1]/div[1]/ul[1]/li/div/ul/li[2]/button"));
@@ -56,9 +56,9 @@ public class ForumMainPageTest {
     void searchInputTest(){
         List<WebDriver> drivers = Utils.getDrivers();
         drivers.parallelStream().forEach(driver -> {
-            driver.get(Utils.FORUM_URL);
             ForumPage forumPage = new ForumPage(driver);
-            // forumPage.agreeCookies();
+            driver.get(Utils.FORUM_URL);
+            forumPage.agreeCookies();
             WebElement input = Utils.getElement(driver, By.xpath("/html/body/div[3]/div[2]/header/div[2]/div[3]/ul/li[1]/div/div/input"));
             input.clear();
             input.sendKeys("Competition time: Win £250/$250/€250");
@@ -76,7 +76,7 @@ public class ForumMainPageTest {
         drivers.parallelStream().forEach(driver -> {
             driver.get(Utils.FORUM_URL);
             ForumPage forumPage = new ForumPage(driver);
-            forumPage.doLogin();
+            forumPage.doLogin(Utils.LOGIN);
             WebElement notificationBtn = Utils.getElement(driver, By.xpath("/html/body/div[3]/div[2]/header/div[2]/div[3]/ul/li[2]/div/button"));
             notificationBtn.click();
             WebElement text = Utils.getElement(driver, By.xpath("/html/body/div[3]/div[2]/header/div[2]/div[3]/ul/li[2]/div/div/div/div[2]/div"));
