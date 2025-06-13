@@ -10,6 +10,20 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ForumPage extends Page {
+    
+    public static final By USERNAME = By.xpath("/html/body/div[3]/div[2]/header/div[2]/div[3]/ul/li[3]/div/button/span[2]/span");
+    public static final By LOGOUT = By.xpath("/html/body/div[3]/div[2]/header/div[2]/div[3]/ul/li[3]/button/span");
+    public static final By ERROR = By.xpath("/html/body/div[4]/div[1]/div[1]/div/form/div[2]/div/span");
+
+    private static final By LOGIN_BUTTON = By.xpath("//*[@id=\\\"header-secondary\\\"]/ul/li[3]/button");
+    private static final By LOGIN_INPUT = By.xpath("/html/body/div[4]/div[1]/div[1]/div/form/div[2]/div[2]/div[1]/input");
+    private static final By PASSWORD_INPUT = By.xpath("/html/body/div[4]/div[1]/div[1]/div/form/div[2]/div[2]/div[2]/input");
+    private static final By AUTH_BUTTON = By.xpath("/html/body/div[4]/div[1]/div[1]/div/form/div[2]/div[2]/div[4]/button");
+
+    private static final By INPUT_EMAIL = By.xpath("/html/body/div[4]/div[1]/div[1]/div/form/div[2]/div/div[1]/input");
+    private static final By INPUT_PASSWORD = By.xpath("/html/body/div[4]/div[1]/div[1]/div/form/div[2]/div/div[2]/input");
+    private static final By SUBMIT = By.xpath("/html/body/div[4]/div[1]/div[1]/div/form/div[2]/div/div[3]/button");
+
     public ForumPage(WebDriver driver) {
         super(driver);
     }
@@ -23,9 +37,9 @@ public class ForumPage extends Page {
         agreeCookies();
         WebElement loginButton = Utils.getElement(driver, By.xpath("//*[@id=\"header-secondary\"]/ul/li[3]/button"));
         loginButton.click();
-        WebElement loginInput = Utils.getElement(driver, By.xpath("/html/body/div[4]/div[1]/div[1]/div/form/div[2]/div[2]/div[1]/input"));
-        WebElement passwordInput = Utils.getElement(driver, By.xpath("/html/body/div[4]/div[1]/div[1]/div/form/div[2]/div[2]/div[2]/input"));
-        WebElement authButton = Utils.getElement(driver, By.xpath("/html/body/div[4]/div[1]/div[1]/div/form/div[2]/div[2]/div[4]/button"));
+        WebElement loginInput = Utils.getElement(driver, LOGIN_INPUT);
+        WebElement passwordInput = Utils.getElement(driver, PASSWORD_INPUT);
+        WebElement authButton = Utils.getElement(driver, AUTH_BUTTON);
         loginInput.clear();
         passwordInput.clear();
         loginInput.sendKeys(login);
@@ -53,9 +67,9 @@ public class ForumPage extends Page {
 
     public void editEmail(String newEmail){
         Utils.getElement(driver, By.xpath("/html/body/div[3]/main/div[1]/div/div/div[2]/div/div/div/ul/li[1]/fieldset/ul/li[2]/button")).click();
-        WebElement inputEmail = Utils.getElement(driver, By.xpath("/html/body/div[4]/div[1]/div[1]/div/form/div[2]/div/div[1]/input"));
-        WebElement inputPassword = Utils.getElement(driver, By.xpath("/html/body/div[4]/div[1]/div[1]/div/form/div[2]/div/div[2]/input"));
-        WebElement submit = Utils.getElement(driver, By.xpath("/html/body/div[4]/div[1]/div[1]/div/form/div[2]/div/div[3]/button"));
+        WebElement inputEmail = Utils.getElement(driver, INPUT_EMAIL);
+        WebElement inputPassword = Utils.getElement(driver, INPUT_PASSWORD);
+        WebElement submit = Utils.getElement(driver, SUBMIT);
 
         inputEmail.clear();
         inputEmail.sendKeys(newEmail);
@@ -67,9 +81,9 @@ public class ForumPage extends Page {
     }
 
     public WebElement followOnDiscussion(){
-        // doLogin(Utils.LOGIN);
         WebElement followBtn = Utils.getElement(driver, By.xpath("/html/body/div[3]/main/div[1]/div/div/div/div/nav/ul/li[2]/div/button[1]"));
         followBtn.click();
+        driver.navigate().refresh();
         WebElement text = Utils.getElement(driver, By.xpath("//*[@id=\"content\"]/div/div/div/div/nav/ul/li[2]/div/button[1]/span"));
         
         return text;
@@ -78,6 +92,8 @@ public class ForumPage extends Page {
     public WebElement unFollowDiscussion(){
         WebElement unfollowBtn = Utils.getElement(driver, By.xpath("/html/body/div[3]/main/div[1]/div/div/div/div/nav/ul/li[2]/div/button[1]"));
         unfollowBtn.click();
+        driver.navigate().refresh();
+
         WebElement textUnfollow = Utils.getElement(driver, By.xpath("/html/body/div[3]/main/div[1]/div/div/div/div/nav/ul/li[2]/div/button[1]"));
         
         return textUnfollow;
@@ -92,6 +108,7 @@ public class ForumPage extends Page {
         doLogin(Utils.LOGIN);
         WebElement likeBtn = Utils.getElement(driver, By.xpath("/html/body/div[3]/main/div[1]/div/div/div/div/div/div/div[2]/article/div/aside/ul/li[3]/button"));
         likeBtn.click();
+        driver.navigate().refresh();
     }
 
     public void setFlag(){

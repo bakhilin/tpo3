@@ -72,7 +72,7 @@ public class ForumMainPageTest {
 
     @Test 
     void checkNotificationEmptyTest(){
-        List<WebDriver> drivers = Utils.getDrivers();
+        List<WebDriver> drivers = Utils.getDrivers();   
         drivers.parallelStream().forEach(driver -> {
             driver.get(Utils.FORUM_URL);
             ForumPage forumPage = new ForumPage(driver);
@@ -80,8 +80,8 @@ public class ForumMainPageTest {
             WebElement notificationBtn = Utils.getElement(driver, By.xpath("/html/body/div[3]/div[2]/header/div[2]/div[3]/ul/li[2]/div/button"));
             notificationBtn.click();
             WebElement text = Utils.getElement(driver, By.xpath("/html/body/div[3]/div[2]/header/div[2]/div[3]/ul/li[2]/div/div/div/div[2]/div"));
-            assertEquals(text.getText(), "No Notifications");
-        });
+            assertEquals("No Notifications", text.getText());
+        }); 
 
         drivers.forEach(WebDriver::quit);
     }
